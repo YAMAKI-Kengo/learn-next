@@ -1,27 +1,32 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Button from "@/components/button"
+import { useState } from "react";
+import Button from "@/components/button";
 
 const Counter = () => {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   const handleIncrement = () => {
-    setCount(count + 1)
-  }
-  
+    setCount(count + 10);
+  };
+
+  const handleDecrement = () => {
+    setCount(count - 10);
+  };
+
   const reset = () => {
-    setCount(count == 0)
-  }
+    setCount(0);
+  };
 
   return (
     <div className="h-screen flex flex-col items-center justify-center">
       <h1 className="text-3xl font-bold mb-4">カウンター</h1>
       <p className="text-2xl mb-4">{count}</p>
-      <Button onClick={handleIncrement}>クリック</Button>
-      <Button onClick={reset}>リセット</Button>
+      <Button onClick={handleIncrement}>+</Button>
+      <Button onClick={handleDecrement}>-</Button>
+      <Button onClick={reset}>reset</Button>
     </div>
-  )
-}
+  );
+};
 
-export default Counter
+export default Counter;
