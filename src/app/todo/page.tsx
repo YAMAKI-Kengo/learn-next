@@ -15,20 +15,27 @@ import Button from "@/components/button";
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [count, setCount] = useState(0);
+  const [completedCount, setCompletedCount] = useState(0);
+  const [tasksCount, setTasksCount] = useState(0);
 
-  const handleIncrement = () => {
-    setCount(count + 1);
+  const handleCompletedIncrement = () => {
+    setCompletedCount(completedCount + 1);
   };
 
-  const reset = () => {
-    setCount(0);
+  const handleTasksIncrement = () => {
+    setTasksCount(tasksCount + 1);
+  };
+
+  const handleDecrement = () => {
+    setTasksCount(tasksCount - 1);
+    setCompletedCount(completedCount - 1);
   };
 
   const addTodo = () => {
     if (inputValue.trim() !== "") {
       setTodos([...todos, { text: inputValue, completed: false }]);
       setInputValue("");
+      handleTasksIncrement();
     }
   };
 
@@ -36,12 +43,13 @@ const TodoList = () => {
     const newTodos = [...todos];
     newTodos[index].completed = !newTodos[index].completed;
     setTodos(newTodos);
-    handleIncrement();
+    handleCompletedIncrement();
   };
 
   const deleteTodo = (index) => {
     const newTodos = todos.filter((_, i) => i !== index);
     setTodos(newTodos);
+    handleDecrement();
   };
 
   return (
@@ -51,10 +59,7 @@ const TodoList = () => {
           ToDo List
         </Text>
         <p className="text-2xl mb-4">
-          Completed Tasks: {count}
-          <Button onClick={reset} style={{ marginLeft: "16px" }}>
-            Reset
-          </Button>
+          Completed Tasks: {completedCount} / {tasksCount}
         </p>
         <Input
           placeholder=" Add new todo..."
