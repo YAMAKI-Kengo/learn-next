@@ -21,10 +21,6 @@ const TodoList = () => {
     setCount(count + 1);
   };
 
-  const handleDecrement = () => {
-    setCount(count - 1);
-  };
-
   const reset = () => {
     setCount(0);
   };
@@ -40,6 +36,7 @@ const TodoList = () => {
     const newTodos = [...todos];
     newTodos[index].completed = !newTodos[index].completed;
     setTodos(newTodos);
+    handleIncrement();
   };
 
   const deleteTodo = (index) => {
@@ -48,17 +45,17 @@ const TodoList = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center text-white">
-      <Text fontSize="24px" fontWeight="bold" textAlign="center" mb={8}>
-        ToDo List
-      </Text>
-      <p className="text-2xl mb-4">
-        Completed Tasks: {count}
-        <Button onClick={reset} style={{ margin: "8px" }}>
-          Reset
-        </Button>
-      </p>
+    <div className="h-screen flex flex-col items-center justify-center">
       <VStack spacing={4} p={4}>
+        <Text fontSize="24px" fontWeight="bold" textAlign="center">
+          ToDo List
+        </Text>
+        <p className="text-2xl mb-4">
+          Completed Tasks: {count}
+          <Button onClick={reset} style={{ marginLeft: "16px" }}>
+            Reset
+          </Button>
+        </p>
         <Input
           placeholder=" Add new todo..."
           value={inputValue}
@@ -66,7 +63,7 @@ const TodoList = () => {
           bg="black"
           h="40px"
         />
-        <Button onClick={addTodo} style={{ marginTop: "8px" }}>
+        <Button onClick={addTodo} style={{ margin: "8px" }}>
           Add
         </Button>
         <VStack
@@ -76,21 +73,12 @@ const TodoList = () => {
           overflowY="auto"
         >
           {todos.map((todo, index) => (
-            <Box
-              key={index}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
+            <Box key={index} display="flex" justifyContent="space-between">
               <Checkbox
                 isChecked={todo.completed}
                 onChange={() => toggleTodo(index)}
               >
-                <Text
-                  textDecoration={todo.completed ? "line-through" : "none"}
-                  onClick={handleIncrement}
-                  onDoubleClick={handleDecrement}
-                >
+                <Text textDecoration={todo.completed ? "line-through" : "none"}>
                   {todo.text}
                 </Text>
               </Checkbox>
